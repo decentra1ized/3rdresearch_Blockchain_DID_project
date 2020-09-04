@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Load connect from CDN -->
+    <script src="https://unpkg.com/uport-connect/dist/uport-connect.js"></script>
+  </head>
+  <style>
+    #msg{
+    }
+  </style>
+  <body>
+    <div id="msg">
+      <h1>자가진단 접속</h1>
+      1. uport로 QR코드 인식
+      2. 인증서 확인
+    </div>
+    <script type="text/javascript">
+     //////////////////////////////
+     //  Configure connect object
+     /////////////////////////////
+
+     const Connect = window.uportconnect
+     const uport = new Connect('MyDApp')
+     //Ask the user for their address information
+     //by using default disclosure behavior.
+     uport.requestDisclosure({requested: ['name', 'attending', 'highschool'], notifications: true })
+
+     uport.onResponse('disclosureReq').then(res => {
+       const did = res.payload.did
+       json = JSON.stringify(res.payload)
+       console.log(json)
+       document.querySelector('#msg').innerHTML = "당신의 신원이 확인되었습니다.`.  Here is your DID identifier:  " + json
+     })
+    
+    </script>
+  </body>
+</html>
